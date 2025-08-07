@@ -29,9 +29,12 @@ app.get('/api/subscription-status', (c) => {
 })
 
 
-app.post('/api/update-subscription', (c) => {
-  const parsedData = SubscriptionSchema.safeParse(c.body);
+app.post('/api/update-subscription', async (c) => {
+  const body = await c.req.json();
+  console.log(body)
+  const parsedData = SubscriptionSchema.safeParse(body);
 
+  console.log(c.body);
   if (!parsedData.success) {
     return c.json({
       error: "Invalid Inputs"
