@@ -2,11 +2,14 @@ import { Hono } from 'hono'
 import { logger } from 'hono/logger';
 import { SubscriptionData } from './response/data.js';
 import { SubscriptionSchema } from './zod/type.js';
+import { cors } from 'hono/cors'
+
 
 
 const app = new Hono()
 
 app.use('/api/*', logger());
+app.use('/api/*', cors())
 
 
 app.get('/api/subscription-status', (c) => {
@@ -31,10 +34,8 @@ app.get('/api/subscription-status', (c) => {
 
 app.post('/api/update-subscription', async (c) => {
   const body = await c.req.json();
-  console.log(body)
   const parsedData = SubscriptionSchema.safeParse(body);
 
-  console.log(c.body);
   if (!parsedData.success) {
     return c.json({
       error: "Invalid Inputs"
