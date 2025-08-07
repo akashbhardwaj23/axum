@@ -1,6 +1,7 @@
 import {z} from "zod"
 
 
+
 export const SubscriptionSchema = z.object({
     userId : z.string(),
     newPlan : z.enum(['monthly_spiritual', 'annual_spiritual', 'free']),
